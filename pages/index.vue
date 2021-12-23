@@ -42,7 +42,9 @@
                                 <li>Design e layout moderno</li>
                                 <li>SEO (Search Engine Optimization)</li>
                             </ul>
-                            <b-button type="button" variant="outline-info" class="btn-block">Saiba mais!</b-button>
+                            <NuxtLink to="/sites-institucionais">
+                                <b-button type="button" variant="outline-info" class="btn-block">Saiba mais!</b-button>
+                            </NuxtLink>
                         </b-card>
                     </b-col>
                     <b-col sm="6" md="4">
@@ -59,7 +61,9 @@
                                 <li>Gerenciamento de conteúdos</li>
                                 <li>SEO</li>
                             </ul>
-                            <b-button type="button" variant="outline-info" class="btn-block">Saiba mais!</b-button>
+                            <NuxtLink to="/blogs">
+                                <b-button type="button" variant="outline-info" class="btn-block">Saiba mais!</b-button>
+                            </NuxtLink>
                         </b-card>
                     </b-col>
                     <b-col sm="6" md="4">
@@ -76,7 +80,9 @@
                                 <li>Loja virtual gerenciada pela plataforma WordPress e WooCommerce</li>
                                 <li>SEO</li>
                             </ul>
-                            <b-button type="button" variant="outline-info" class="btn-block">Saiba mais!</b-button>
+                            <NuxtLink to="/lojas-virtuais">
+                                <b-button type="button" variant="outline-info" class="btn-block">Saiba mais!</b-button>
+                            </NuxtLink>
                         </b-card>
                     </b-col>
                     <b-col sm="6" md="4">
@@ -93,7 +99,9 @@
                                 <li>Gerenciamento de conteúdo</li>
                                 <li>SEO</li>
                             </ul>
-                            <b-button type="button" variant="outline-info" class="btn-block">Saiba mais!</b-button>
+                            <NuxtLink to="/portais-de-noticias">
+                                <b-button type="button" variant="outline-info" class="btn-block">Saiba mais!</b-button>
+                            </NuxtLink>
                         </b-card>
                     </b-col>
                     <b-col sm="6" md="4">
@@ -109,7 +117,9 @@
                                 <li>Atendimento no local</li>
                                 <li>Realização de backups (cópia de segurança)</li>
                             </ul>
-                            <b-button type="button" variant="outline-info" class="btn-block">Saiba mais!</b-button>
+                            <NuxtLink to="/manutencao-de-computadores">
+                                <b-button type="button" variant="outline-info" class="btn-block">Saiba mais!</b-button>
+                            </NuxtLink>
                         </b-card>
                     </b-col>
                     <b-col sm="6" md="4">
@@ -125,7 +135,9 @@
                                 <li>Gerenciamento e atualização de conteúdos</li>
                                 <li>Atualizações de plugins WordPress e WooCommerce (não se trata do uso de linguagens de programação)</li>
                             </ul>
-                            <b-button type="button" variant="outline-info" class="btn-block">Saiba mais!</b-button>
+                            <NuxtLink to="/manutencoes">
+                                <b-button type="button" variant="outline-info" class="btn-block">Saiba mais!</b-button>
+                            </NuxtLink>
                         </b-card>
                     </b-col>
                 </b-row>
@@ -137,50 +149,17 @@
             <h1 class="text-center">Últimas Informações</h1>
             <div class="content">
                 <b-row>
-                    <!-- <b-col sm="6" md="3">
+                    <b-col sm="6" md="3" v-for="post in posts" :key="post.id">
                         <b-card
                             img-top
-                            img-src="../images/dominio-hospedagem.webp"
-                            img-alt="Imagem sobre domínio e hospedagem"
+                            :img-src="`${post.better_featured_image.source_url}`"
+                            :img-alt="`${post.better_featured_image.alt_text}`"
                             img-fluid
                         >
-                            <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at dignissim lorem, non commodo erat. Praesent felis velit, laoreet et rutrum a, venenatis in felis...</b-card-text>
-                            <b-button type="button" variant="outline-primary" class="btn-block">Leia mais</b-button>
+                            <p class="text-justify" v-html="`${post.content.rendered.slice(0, 86) + '...'}`"></p>
+                            <NuxtLink :to="{name: 'post-slug', params: {slug: post.slug, id: post.id}}"><b-button type="button" variant="outline-primary" class="btn-block">Leia mais</b-button></NuxtLink>
                         </b-card>
                     </b-col>
-                    <b-col sm="6" md="3">
-                        <b-card
-                            img-top
-                            img-src="../images/seo.jpg"
-                            img-alt="Imagem sobre SEO"
-                            img-fluid
-                        >
-                            <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at dignissim lorem, non commodo erat. Praesent felis velit, laoreet et rutrum a, venenatis in felis...</b-card-text>
-                            <b-button type="button" variant="outline-primary" class="btn-block">Leia mais</b-button>
-                        </b-card>
-                    </b-col>
-                    <b-col sm="6" md="3">
-                        <b-card
-                            img-top
-                            img-src="../images/headless.jpg"
-                            img-alt="Imagem de desenvolvimento headless referente a sites"
-                            img-fluid
-                        >
-                            <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at dignissim lorem, non commodo erat. Praesent felis velit, laoreet et rutrum a, venenatis in felis</b-card-text>
-                            <b-button type="button" variant="outline-primary" class="btn-block">Leia mais</b-button>
-                        </b-card>
-                    </b-col>
-                    <b-col sm="6" md="3">
-                        <b-card
-                            img-top
-                            img-src="../images/desenvolvimento-responsivo.jpg"
-                            img-alt="Imagem de desenvolvimento responsivo e de dispositivos"
-                            img-fluid
-                        >
-                            <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at dignissim lorem, non commodo erat. Praesent felis velit, laoreet et rutrum a, venenatis in felis...</b-card-text>
-                            <b-button type="button" variant="outline-primary" class="btn-block">Leia mais</b-button>
-                        </b-card>
-                    </b-col>-->
                 </b-row>
             </div>
         </b-container>
@@ -190,6 +169,7 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
     data() {
         return {
@@ -199,16 +179,16 @@ export default {
     },
     methods: {
         async getPosts() {
-            const url = "http://localhost/blog-wsconstrutor/wordpress/wp-json/wp/v2/posts"
-            await this.$axios.get(url)
-            .then((response) => {
-                console.log(response.data)
-                this.posts = response.data
-            }).catch((error) => {
-                console.log(error)
-                this.$toast.error("Erro ao carregar as postagens!", error)
-            })
+            await axios.get("http://localhost/blog-wsconstrutor/wordpress/wp-json/wp/v2/posts?per_page=4&order=desc").then((response) => {
+            console.log(response.data)
+            this.posts = response.data
+        }).catch((error) => {
+            return this.$toast.error("Erro ao carregar os posts", error)
+        })
         }
+    },
+    mounted() {
+        this.getPosts()
     },
     head: {
         title: "Bem-vindo ao site oficial da WS - Construtor"
@@ -271,6 +251,11 @@ a.link-contact {
 
 a.link-contact:hover {
     color: black;
+    text-decoration: none;
+}
+
+a:hover {
+    color: white;
     text-decoration: none;
 }
 

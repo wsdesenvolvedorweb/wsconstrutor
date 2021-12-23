@@ -5,7 +5,9 @@
           <b-navbar-toggle target="menu">
             <font-awesome-icon :icon="['fas', 'bars']" :style="{color: 'white', fontSize: '40px'}"></font-awesome-icon>
           </b-navbar-toggle>
-          <b-navbar-brand class="text-white">WS - Construtor</b-navbar-brand>
+          <b-navbar-brand class="text-white">
+            <img src="../images/logotipo.png" alt="Logotipo da WS - FormaSites" id="logo">
+          </b-navbar-brand>
           <b-collapse id="menu" is-nav>
             <b-navbar-nav class="ml-auto">
               <b-nav-item to="/">Home</b-nav-item>
@@ -55,5 +57,10 @@ header.header, .dropdown-menu, .dropdown-menu a:hover {
 
 .navbar-light .navbar-nav .nav-link:hover, .dropdown-menu a:hover {
   color: #75c7fb;
+}
+
+img#logo {
+  width: 100%;
+  height: 18vh;
 }
 </style>

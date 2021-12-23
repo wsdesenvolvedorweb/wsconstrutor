@@ -6,101 +6,32 @@
             <div class="content">
                 <h1 class="text-center">Blog</h1>
                 <b-row>
-                    <b-col sm="6" md="3">
+                    <b-col sm="6" md="3" v-for="post in postsPerPage" :key="post.id">
                         <b-card
-                            img-src="../images/dominio-hospedagem.webp"
-                            img-alt="Imagem de domínio e hospedagem"
+                            :img-src="`${post.better_featured_image.source_url}`"
+                            :img-alt="`${post.better_featured_image.alt_text}`"
                             img-top
                         >
-                            <b-card-text>Você sabe quais são as diferenças entre domínio e hospedagem?...</b-card-text>
-                            <b-button variant="outline-info" class="btn-block" type="button">Leia mais</b-button>
-                        </b-card>
-                    </b-col>
-                    <b-col sm="6" md="3">
-                        <b-card
-                            img-src="../images/desenvolvimento-responsivo.jpg"
-                            img-alt="Imagem de dispositivos para desenvolvimento de sites"
-                            img-top
-                        >
-                            <b-card-text>Você tem visitantes que acessam o seu site tanto pelo desktop quanto por dispositivos móveis...</b-card-text>
-                            <b-button variant="outline-info" class="btn-block" type="button">Leia mais</b-button>
-                        </b-card>
-                    </b-col>
-                    <b-col sm="6" md="3">
-                        <b-card
-                            img-src="../images/headless.jpg"
-                            img-alt="Imagem de desenvolvimento headless da WS - Construtor"
-                            img-top
-                        >
-                            <b-card-text>Para sabermos o que é um Headless CMS (Content Management System)...</b-card-text>
-                            <b-button variant="outline-info" class="btn-block" type="button">Leia mais</b-button>
-                        </b-card>
-                    </b-col>
-                    <b-col sm="6" md="3">
-                        <b-card
-                            img-src="../images/seo.jpg"
-                            img-alt="Imagem de SEO em um site"
-                            img-top
-                        >
-                            <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at dignissim lorem, 
-                            non commodo erat. Praesent felis velit, laoreet et rutrum a, venenatis in felis...</b-card-text>
-                            <b-button variant="outline-info" class="btn-block" type="button">Leia mais</b-button>
-                        </b-card>
-                    </b-col>
-                    <b-col sm="6" md="3">
-                        <b-card
-                            img-src="../images/seo.jpg"
-                            img-alt="Imagem de SEO em um site"
-                            img-top
-                        >
-                            <b-card-text>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc at dignissim lorem, 
-                            non commodo erat. Praesent felis velit, laoreet et rutrum a, venenatis in felis...</b-card-text>
-                            <b-button variant="outline-info" class="btn-block" type="button">Leia mais</b-button>
-                        </b-card>
-                    </b-col>
-                    <b-col sm="6" md="3">
-                        <b-card
-                            img-src="../images/headless.jpg"
-                            img-alt="Imagem de desenvolvimento headless da WS - Construtor"
-                            img-top
-                        >
-                            <b-card-text>Para sabermos o que é um Headless CMS (Content Management System)...</b-card-text>
-                            <b-button variant="outline-info" class="btn-block" type="button">Leia mais</b-button>
-                        </b-card>
-                    </b-col>
-                    <b-col sm="6" md="3">
-                        <b-card
-                            img-src="../images/dominio-hospedagem.webp"
-                            img-alt="Imagem de domínio e hospedagem"
-                            img-top
-                        >
-                            <b-card-text>Você sabe quais são as diferenças entre domínio e hospedagem?...</b-card-text>
-                            <b-button variant="outline-info" class="btn-block" type="button">Leia mais</b-button>
-                        </b-card>
-                    </b-col>
-                    <b-col sm="6" md="3">
-                        <b-card
-                            img-src="../images/desenvolvimento-responsivo.jpg"
-                            img-alt="Imagem de dispositivos para desenvolvimento de sites"
-                            img-top
-                        >
-                            <b-card-text>Você tem visitantes que acessam o seu site tanto pelo desktop quanto por dispositivos móveis...</b-card-text>
-                            <b-button variant="outline-info" class="btn-block" type="button">Leia mais</b-button>
+                            <b-card-text v-html="`${post.content.rendered.slice(0, 86)}...`"></b-card-text>
+                            <NuxtLink :to="{name: 'post-slug', params: {slug: post.slug, id: post.id}}">
+                                <b-button variant="outline-info" class="btn-block" type="button">Leia mais</b-button>
+                            </NuxtLink>
                         </b-card>
                     </b-col>
                 </b-row>
-                <div class="overflow-auto mt-3">
-                    <b-pagination 
-                        v-model="page" 
-                        :perPage="perPage" 
-                        :total-rows="100"
-                        first-text="Primeiro"
-                        prev-text="Anterior"
-                        next-text="Próximo"
-                        last-text="Último"
-                        align="center">
-                    </b-pagination>
-                </div>
+                <nav aria-label="Navegação entre páginas do blog da WS - Construtor">
+                    <ul class="pagination justify-content-center mt-3">
+                        <li class="page-item" @click="previousPage">
+                            <NuxtLink to="#" class="page-link" tabindex="-1">Anterior</NuxtLink>
+                        </li>
+                        <li class="page-item">
+                            <NuxtLink to="#" class="page-link">{{page}}</NuxtLink>
+                        </li>
+                        <li class="page-item" @click="nextPage">
+                            <NuxtLink to="#" class="page-link">Próximo</NuxtLink>
+                        </li>
+                    </ul>
+                </nav>
             </div>
         </b-container>
     </section>
@@ -109,12 +40,38 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
     data() {
         return {
             page: 1,
-            perPage: 8
+            perPage: 8,
+            postsPerPage: []
         }
+    },
+    methods: {
+        async getPostsPaginated() {
+            await axios.get(`http://localhost/blog-wsconstrutor/wordpress/wp-json/wp/v2/posts?page=${this.page}&per_page=${this.perPage}&order=desc`).then((response) => {
+                this.postsPerPage = response.data
+            })
+        },
+        previousPage() {
+            if(this.page < 2) {
+                return this.page
+            }
+            --this.page
+            this.getPostsPaginated()
+        },
+        nextPage() {
+            if(!(this.postsPerPage.length >= this.perPage)) {
+                return
+            }
+            ++this.page
+            this.getPostsPaginated()
+        }
+    },
+    mounted() {
+        this.getPostsPaginated()
     },
     head: {
         title: "Últimas informações - WS - Construtor"
@@ -136,5 +93,13 @@ div.content {
 div.card {
     background-color: inherit;
     margin: 5px;
+}
+
+nav ul li a {
+    background-color: inherit;
+}
+
+a {
+    text-decoration: none;
 }
 </style>

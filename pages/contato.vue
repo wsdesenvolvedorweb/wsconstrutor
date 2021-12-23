@@ -89,6 +89,7 @@
 </template>
 
 <script>
+import axios from "axios"
 export default {
     data() {
         return {
@@ -104,7 +105,7 @@ export default {
     methods: {
         // ! Utilização do método em ambiente de desenvolvimento, não será usado em produção.
         async sendEmail() {
-            await this.$axios.post("http://localhost:3001/contact", {
+            await axios.post("http://localhost:3001/contact", {
                 name: this.contact.name,
                 email: this.contact.email,
                 subject: this.contact.subject,
